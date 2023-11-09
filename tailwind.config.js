@@ -4,7 +4,11 @@ export default {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'footer-bg': "#edf3f6"
+      }
+    },
   },
   plugins: [],
 }

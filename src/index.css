@@ -2,6 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  @apply box-border m-0 p-0 border-0 outline-none;
+}
+
+body {
+  @apply bg-zinc-50;
+}
+
+a{
+  @apply cursor-pointer hover:bg-gray-100;
+}
+
+a, button{
+  @apply focus:outline-none duration-500;
+}
+
+h1{
+  @apply text-4xl font-bold text-gray-900;
+}
+
 .container{
-  @apply min-h-[60vh] mb-20;
+  @apply min-h-[60vh] mb-20 min-w-[80vw] mx-auto;
+}
+
+.active:not(.text-xl){
+  @apply bg-gray-200 text-gray-900;
+}
+
+.btn{
+  @apply bg-lime-600 text-neutral-50 text-center cursor-pointer rounded-md py-2.5 px-3.5 hover:bg-lime-700 font-semibold w-32;
+}
+
+.btn.dark{
+  @apply bg-gray-800;
+}
+
+.btn.outline{
+  @apply bg-transparent border border-solid border-neutral-950;
+}
+
+.btn.danger{
+  @apply bg-red-400 hover:bg-red-700 border border-solid border-red-500;
 }
