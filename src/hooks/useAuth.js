@@ -32,7 +32,7 @@ export const useAuth = () => {
         data.password
       );
       await updateProfile(user, {
-        displayName: data.name,
+        displayName: data.displayName,
       });
     } catch (e) {
       let message = "";
