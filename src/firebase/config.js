@@ -1,16 +1,18 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
-// Just create and .env file in the root of your project and add the following
 const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGING_SENDER_ID,
-  appId: process.env.APP_ID
+  apiKey: "AIzaSyDlKKi8yTLYTlSFJzt8YvMJR_YNVLeAULE",
+  authDomain: "miniblog-46074.firebaseapp.com",
+  projectId: "miniblog-46074",
+  storageBucket: "miniblog-46074.appspot.com",
+  messagingSenderId: "148209578936",
+  appId: "1:148209578936:web:dc513079ddc36ac3f1554d",
 };
 
 const app = initializeApp(firebaseConfig);
+console.log(app);
 
-const db = getFirestore(app)
+const db = getFirestore(app);
+
+export default db;

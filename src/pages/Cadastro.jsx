@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useState, useEffect } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 const Cadastro = () => {
   const [user, setUser] = useState({
@@ -10,6 +11,7 @@ const Cadastro = () => {
   });
   const [confirPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const { createUser, error: authError, loading } = useAuth();
 
   const handleInputChange = (event) => {
     setUser({
@@ -18,7 +20,7 @@ const Cadastro = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setError("");
@@ -28,12 +30,18 @@ const Cadastro = () => {
       return;
     }
 
-    console.log(user)
+    await createUser(user);
   };
 
-  const label = "flex flex-col mb-4"
-  const span = "mb-1.5 font-bold text-left"
-  const input = "border-b border-gray-400 py-1 px-2 bg-transparent"
+  useEffect(() => {
+    if (authError) {
+      setError(authError);
+    }
+  }, [authError]);
+
+  const label = "flex flex-col mb-4";
+  const span = "mb-1.5 font-bold text-left";
+  const input = "border-b border-gray-400 py-1 px-2 bg-transparent";
 
   return (
     <div className="text-center mt-8">
@@ -47,7 +55,7 @@ const Cadastro = () => {
           <input
             type="text"
             name="displayName"
-            required  
+            required
             placeholder="Nome de usuário"
             value={user.displayName}
             onChange={handleInputChange}
@@ -90,8 +98,20 @@ const Cadastro = () => {
             className={input}
           />
         </label>
-        <button className="btn" type="submit">Cadastrar</button>
-        {error && <p className="mt-4 text-red-500 bg-red-400 border border-solid border-red-500 rounded-md p-1.5">{error}</p>}
+        {!loading ? (
+          <button className="btn" type="submit">
+            Cadastrar
+          </button>
+        ) : (
+          <button className="btn" type="submit" disabled>
+            Cadastrando...
+          </button>
+        )}
+        {error && (
+          <p className="mt-4 text-red-500 bg-red-200 border border-solid border-red-500 rounded-md p-1.5">
+            {error}
+          </p>
+        )}
       </form>
     </div>
   );

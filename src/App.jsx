@@ -9,6 +9,7 @@ import { Home, About, Login, Cadastro } from "./pages";
 import { Footer, Navbar } from "./components";
 
 function App() {
+
   return (
     <Router>
       <Navbar />

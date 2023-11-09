@@ -45,3 +45,7 @@ h1{
 .btn.danger{
   @apply bg-red-400 hover:bg-red-700 border border-solid border-red-500;
 }
+
+.btn[disabled]{
+  @apply bg-gray-300 text-gray-500 cursor-not-allowed;
+}
