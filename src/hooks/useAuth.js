@@ -55,6 +55,49 @@ export const useAuth = () => {
       setError(message);
     }
     setLoading(false);
+  };
+
+  const logout = () => {
+    checkIfCancelled();
+    signOut(auth);
+  };
+
+  const login = async (data) => {
+    checkIfCancelled();
+    setLoading(true);
+    setError(null);
+    console.log("D",data)
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+    } catch (e) {
+      let message = "";
+
+      switch (e.code) {
+        case "auth/invalid-email":
+          message = "E-mail inválido.";
+          break;
+        case "auth/user-disabled":
+          message = "Usuário desabilitado.";
+          break;
+        case "auth/user-not-found":
+          message = "Usuário não encontrado.";
+          break;
+        case "auth/wrong-password":
+          message = "Senha incorreta.";
+          break;
+        case "auth/invalid-login-credentials":
+          message = "Credenciais inválidas.";
+          break;
+        default:
+          message = "Erro desconhecido.";
+          break;
+      }
+
+      console.error(e);
+
+      setError(message);
+    }
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -65,6 +108,8 @@ export const useAuth = () => {
     auth,
     error,
     loading,
-    createUser
+    createUser,
+    logout,
+    login,
   }
 };

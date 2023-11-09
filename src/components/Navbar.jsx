@@ -10,15 +10,10 @@ const Navbar = () => {
       <NavLink to="/" className="text-xl">
         Mini<span className="font-extrabold">BLOG</span>
       </NavLink>
-      <ul className="flex list-none">
+      <ul className="flex list-none items-center">
         <li className="mr-4">
           <NavLink to="/" className="py-2 px-2.5">
             Home
-          </NavLink>
-        </li>
-        <li className="mr-4">
-          <NavLink to="/about" className="py-2 px-2.5">
-            About
           </NavLink>
         </li>
         {!user && (
@@ -35,7 +30,7 @@ const Navbar = () => {
             </li>
           </>
         )}
-        {user&&(
+        {user && (
           <>
             <li className="mr-4">
               <NavLink to="/dashboard" className="py-2 px-2.5">
@@ -49,6 +44,11 @@ const Navbar = () => {
             </li>
           </>
         )}
+        <li className="mr-4">
+          <NavLink to="/about" className="py-2 px-2.5">
+            About
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );
