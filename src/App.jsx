@@ -7,7 +7,16 @@ import {
 
 import { onAuthStateChanged } from "firebase/auth";
 
-import { Home, About, Login, Cadastro, Dashboard, CreatePost } from "./pages";
+import {
+  Home,
+  About,
+  Login,
+  Cadastro,
+  Dashboard,
+  CreatePost,
+  Search,
+  Post
+} from "./pages";
 import { Footer, Navbar } from "./components";
 
 import { useAuth } from "./hooks/useAuth";
@@ -38,6 +47,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/posts/:id" element={<Post />} />
             <Route
               path="/login"
               element={!user ? <Login /> : <Navigate to="/" />}
@@ -54,7 +64,8 @@ function App() {
               path="/create-post"
               element={user ? <CreatePost /> : <Navigate to="/login" />}
             />
-            <Route path="*" element={<Navigate to="/login" />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>
         <Footer />

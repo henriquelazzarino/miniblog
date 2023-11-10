@@ -39,7 +39,7 @@ h1{
 }
 
 .btn.outline{
-  @apply bg-transparent border border-solid border-neutral-950;
+  @apply bg-transparent border border-solid border-neutral-950 text-black;
 }
 
 .btn.danger{
