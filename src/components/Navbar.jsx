@@ -3,7 +3,6 @@ import { useAuthValue } from "../contexts/UserContext";
 
 const Navbar = () => {
   const { user } = useAuthValue();
-  console.log("NAVBAR", user);
 
   return (
     <nav className="shadow-lg flex justify-between items-center py-5 px-3">
