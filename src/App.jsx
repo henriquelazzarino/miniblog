@@ -22,6 +22,7 @@ import { Footer, Navbar } from "./components";
 import { useAuth } from "./hooks/useAuth";
 import { useEffect, useState } from "react";
 import { AuthProvider } from "./contexts/UserContext";
+import EditarPost from "./pages/EditarPost";
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -48,7 +49,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/posts/:id" element={<Post />} />
-            <Route path="/posts/edit/:id" element={<CreatePost />} />
+            <Route path="/posts/edit/:id" element={<EditarPost />} />
             <Route
               path="/login"
               element={!user ? <Login /> : <Navigate to="/" />}
