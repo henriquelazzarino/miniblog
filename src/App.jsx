@@ -12,7 +12,7 @@ import {
   About,
   Login,
   Cadastro,
-  Dashboard,
+  Perfil,
   CreatePost,
   Search,
   Post
@@ -48,6 +48,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/posts/:id" element={<Post />} />
+            <Route path="/posts/edit/:id" element={<CreatePost />} />
             <Route
               path="/login"
               element={!user ? <Login /> : <Navigate to="/" />}
@@ -57,8 +58,8 @@ function App() {
               element={!user ? <Cadastro /> : <Navigate to="/" />}
             />
             <Route
-              path="/dashboard"
-              element={user ? <Dashboard /> : <Navigate to="/" />}
+              path="/profile"
+              element={user ? <Perfil /> : <Navigate to="/" />}
             />
             <Route
               path="/create-post"

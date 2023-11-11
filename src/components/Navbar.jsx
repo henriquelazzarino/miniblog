@@ -32,8 +32,8 @@ const Navbar = () => {
         {user && (
           <>
             <li className="mr-4">
-              <NavLink to="/dashboard" className="py-2 px-2.5">
-                Dashboard
+              <NavLink to="/profile" className="py-2 px-2.5">
+                Perfil
               </NavLink>
             </li>
             <li className="mr-4">
