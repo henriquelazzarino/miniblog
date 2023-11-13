@@ -1,54 +1,76 @@
-import React, { useState } from "react";
-import { useInsertDocument } from "../hooks/useInsertDocument";
+import React, { useEffect, useState } from "react";
 import { useAuthValue } from "../contexts/UserContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFetchDocument } from "../hooks/useFetchDocument";
+import { useUpdateDocument } from "../hooks/useUpdateDocument";
 
 const EditarPost = () => {
-  const [formError, setFormError] = useState();
-  const [loading, setLoading] = useState(false);
-  const { user } = useAuthValue();
-  const {id} = useParams();
-  const {document: post} = useFetchDocument("posts", id);
+  const { id } = useParams();
+  const { document: post } = useFetchDocument("posts", id);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setPost({
-      ...post,
-      [name]: value,
-    });
-  };
+  console.log(post);
 
-  const handleSubmit = async (e) => {
+  const [title, setTitle] = useState("");
+  const [image, setImage] = useState("");
+  const [body, setBody] = useState("");
+  const [tags, setTags] = useState([]);
+  const [formError, setFormError] = useState("");
+
+  // fill form data
+  useEffect(() => {
+    if (post) {
+      setTitle(post.title);
+      setImage(post.image);
+      setBody(post.body);
+
+      const textTags = post.tags.join(", ");
+
+      setTags(textTags);
+    }
+  }, [post]);
+
+  const navigate = useNavigate();
+
+  const { updateDocument, response } = useUpdateDocument("posts");
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     setFormError("");
-    setLoading(true);
 
+    // validate image
     try {
-      new URL(post.image);
-    } catch (e) {
-      setFormError("URL inválida");
-      setLoading(false);
-      return;
+      new URL(image);
+    } catch (error) {
+      setFormError("A imagem precisa ser uma URL.");
     }
 
-    const tags = post.tags.split(",").map((tag) => tag.trim().toLowerCase());
+    // create tags array
+    const tagsArray = tags.split(",").map((tag) => tag.trim());
 
-    if (!post.title || !post.image || !post.body || !post.tags) {
-      setFormError("Preencha todos os campos");
-      setLoading(false);
-      return;
-    }
+    console.log(tagsArray);
 
-    await insertDocument({
-      ...post,
-      uid: user.uid,
-      tags,
-      createdBy: user.displayName,
+    console.log({
+      title,
+      image,
+      body,
+      tags: tagsArray,
     });
 
-    setLoading(false);
+    const data = {
+      title,
+      image,
+      body,
+      tags: tagsArray,
+    };
+
+    console.log(post);
+
+    updateDocument(id, data);
+
+    // redirect to home page
+    navigate("/profile");
   };
+
 
   const label = "flex flex-col mb-4";
   const span = "mb-1.5 font-bold text-left";
@@ -66,9 +88,9 @@ const EditarPost = () => {
           <input
             type="text"
             name="title"
-            value={post.title}
+            value={title}
             required
-            onChange={handleChange}
+            onChange={(e)=>setTitle(e.target.value)}
             placeholder="Título do post"
             className={input}
           />
@@ -78,9 +100,9 @@ const EditarPost = () => {
           <input
             type="text"
             name="image"
-            value={post.image}
+            value={image}
             required
-            onChange={handleChange}
+            onChange={(e)=>setImage(e.target.value)}
             placeholder="URL da imagem"
             className={input}
           />
@@ -89,9 +111,9 @@ const EditarPost = () => {
           <span className={span}>Conteúdo:</span>
           <textarea
             name="body"
-            value={post.body}
+            value={body}
             required
-            onChange={handleChange}
+            onChange={(e)=>setBody(e.target.value)}
             placeholder="Conteúdo do post"
             className={input}
           />
@@ -101,27 +123,16 @@ const EditarPost = () => {
           <input
             type="text"
             name="tags"
-            value={post.tags}
+            value={tags}
             required
-            onChange={handleChange}
+            onChange={(e)=>setTags(e.target.value)}
             placeholder="Tags do post, separadas por vírgula"
             className={input}
           />
         </label>
-        {!loading ? (
-          <button className="btn" type="submit">
-            Criar post
-          </button>
-        ) : (
-          <button className="btn" type="submit" disabled>
-            Criando...
-          </button>
-        )}
-        {response.error && (
-          <p className="mt-4 text-red-500 bg-red-200 border border-solid border-red-500 rounded-md p-1.5">
-            {response.error}
-          </p>
-        )}
+        <button className="btn" type="submit">
+          Editar post
+        </button>
         {formError && (
           <p className="mt-4 text-red-500 bg-red-200 border border-solid border-red-500 rounded-md p-1.5">
             {formError}
